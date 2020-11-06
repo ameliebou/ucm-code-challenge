@@ -23,5 +23,12 @@ RSpec.describe Job, type: :model do
   end
 
   it "must have at least 1 spoken language" do
+    job = Job.new
+    job.valid?
+    expect(job.errors[:spoken_languages]).to include("is too short")
+
+    job.spoken_languages << "english"
+    job.valid?
+    expect(job.errors[:spoken_languages]).to_not include("is too short")
   end
 end

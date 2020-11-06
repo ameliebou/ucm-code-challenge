@@ -1,4 +1,6 @@
 class Job < ApplicationRecord
-  has_many :spoken_languages
-  has_many :shifts
+  validates :title, presence: true
+  validates :salary_per_hour, presence: true
+
+  validates :spoken_languages, length: { minimum: 1 }
 end

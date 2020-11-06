@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_06_113822) do
+ActiveRecord::Schema.define(version: 2020_11_06_125852) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,23 +20,7 @@ ActiveRecord::Schema.define(version: 2020_11_06_113822) do
     t.float "salary_per_hour"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "shifts", force: :cascade do |t|
-    t.datetime "start_time"
-    t.datetime "end_time"
-    t.bigint "job_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["job_id"], name: "index_shifts_on_job_id"
-  end
-
-  create_table "spoken_languages", force: :cascade do |t|
-    t.string "name"
-    t.bigint "job_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["job_id"], name: "index_spoken_languages_on_job_id"
+    t.text "spoken_languages", default: [], array: true
   end
 
   create_table "users", force: :cascade do |t|
@@ -53,6 +37,4 @@ ActiveRecord::Schema.define(version: 2020_11_06_113822) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "shifts", "jobs"
-  add_foreign_key "spoken_languages", "jobs"
 end
