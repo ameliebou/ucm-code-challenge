@@ -52,4 +52,13 @@ RSpec.describe Job, type: :model do
     job.valid?
     expect(job.errors[:shifts]).to include("is too long (maximum is 7 characters)")
   end
+
+  describe "#total_pay" do
+    it "returns the number of hours times the salary per hour" do
+      job = Job.create(title:"Kitchen help", salary_per_hour: 16, spoken_languages: ["german", "english"], shifts: [[DateTime.new(2020,11,27,11), DateTime.new(2020,11,27,15)], [DateTime.new(2020,11,27,19), DateTime.new(2020,11,27,22)]])
+      actual = job.total_pay
+      expected = 112
+      expect(actual).to eq(expected)
+    end
+  end
 end
