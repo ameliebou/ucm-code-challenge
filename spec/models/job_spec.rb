@@ -31,4 +31,10 @@ RSpec.describe Job, type: :model do
     job.valid?
     expect(job.errors[:spoken_languages]).to_not include("is too short (minimum is 1 character)")
   end
+
+  it "must have between 1 and 7 shifts" do
+    job = Job.new
+    job.valid?
+    expect(job.errors[:shifts]).to include("is too short (minimum is 1 character)")
+  end
 end
