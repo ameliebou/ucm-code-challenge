@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'date'
 
 RSpec.describe Job, type: :model do
   it "validates presence of title" do
@@ -36,5 +37,19 @@ RSpec.describe Job, type: :model do
     job = Job.new
     job.valid?
     expect(job.errors[:shifts]).to include("is too short (minimum is 1 character)")
+
+    job.shifts << [DateTime.new(2020,11,25,11), DateTime.new(2020,11,25,13)]
+    job.valid?
+    expect(job.errors[:shifts]).to_not include("is too short (minimum is 1 character)")
+
+    job.shifts << [DateTime.new(2020,11,25,11), DateTime.new(2020,11,25,13)]
+    job.shifts << [DateTime.new(2020,11,25,11), DateTime.new(2020,11,25,13)]
+    job.shifts << [DateTime.new(2020,11,25,11), DateTime.new(2020,11,25,13)]
+    job.shifts << [DateTime.new(2020,11,25,11), DateTime.new(2020,11,25,13)]
+    job.shifts << [DateTime.new(2020,11,25,11), DateTime.new(2020,11,25,13)]
+    job.shifts << [DateTime.new(2020,11,25,11), DateTime.new(2020,11,25,13)]
+    job.shifts << [DateTime.new(2020,11,25,11), DateTime.new(2020,11,25,13)]
+    job.valid?
+    expect(job.errors[:shifts]).to include("is too long (maximum is 7 characters)")
   end
 end
