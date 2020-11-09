@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Jobs API", type: :request do
+RSpec.describe "Jobs requests", type: :request do
   describe 'GET /jobs' do
     before do
       Job.create(title:"Host/Hostess", salary_per_hour: 20, spoken_languages: ["english", "french"], shifts: [[DateTime.new(2020,11,25,11), DateTime.new(2020,11,25,15)], [DateTime.new(2020,11,25,15), DateTime.new(2020,11,25,18)]])
