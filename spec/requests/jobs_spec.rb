@@ -15,20 +15,20 @@ RSpec.describe "Jobs API", type: :request do
       expect(response_body).to eq(
         [
           {
-              "title"=> "Host/Hostess",
-              "total_pay"=> 140.0,
-              "spoken_languages"=> [
-                  "english",
-                  "french"
-              ]
+            "title"=> "Host/Hostess",
+            "total_pay"=> 140.0,
+            "spoken_languages"=> [
+                "english",
+                "french"
+            ]
           },
           {
-              "title"=> "Kitchen help",
-              "total_pay"=> 112.0,
-              "spoken_languages"=> [
-                  "german",
-                  "english"
-              ]
+            "title"=> "Kitchen help",
+            "total_pay"=> 112.0,
+            "spoken_languages"=> [
+                "german",
+                "english"
+            ]
           }
         ]
       )
@@ -41,12 +41,12 @@ RSpec.describe "Jobs API", type: :request do
       expect(response_body).to eq(
         [
           {
-              "title"=> "Host/Hostess",
-              "total_pay"=> 140.0,
-              "spoken_languages"=> [
-                  "english",
-                  "french"
-              ]
+            "title"=> "Host/Hostess",
+            "total_pay"=> 140.0,
+            "spoken_languages"=> [
+                "english",
+                "french"
+            ]
           }
         ]
       )
@@ -59,12 +59,60 @@ RSpec.describe "Jobs API", type: :request do
       expect(response_body).to eq(
         [
           {
-              "title"=> "Kitchen help",
-              "total_pay"=> 112.0,
-              "spoken_languages"=> [
-                  "german",
-                  "english"
-              ]
+            "title"=> "Kitchen help",
+            "total_pay"=> 112.0,
+            "spoken_languages"=> [
+                "german",
+                "english"
+            ]
+          }
+        ]
+      )
+    end
+
+    it 'searches by title' do
+      get '/api/v1/jobs', params: { title: 'kitchen' }
+      expect(response_body).to eq(
+        [
+          {
+            "title"=> "Kitchen help",
+            "total_pay"=> 112.0,
+            "spoken_languages"=> [
+                "german",
+                "english"
+            ]
+          }
+        ]
+      )
+    end
+
+    it 'searches by spoken language' do
+      get '/api/v1/jobs', params: { spoken_language: 'german' }
+      expect(response_body).to eq(
+        [
+          {
+            "title"=> "Kitchen help",
+            "total_pay"=> 112.0,
+            "spoken_languages"=> [
+                "german",
+                "english"
+            ]
+          }
+        ]
+      )
+    end
+
+    it 'searches by title and spoken language' do
+      get '/api/v1/jobs', params: { spoken_language: 'english', title: 'host' }
+      expect(response_body).to eq(
+        [
+          {
+            "title"=> "Host/Hostess",
+            "total_pay"=> 140.0,
+            "spoken_languages"=> [
+                "english",
+                "french"
+            ]
           }
         ]
       )

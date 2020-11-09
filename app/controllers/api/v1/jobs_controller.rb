@@ -1,6 +1,14 @@
 class Api::V1::JobsController < Api::V1::BaseController
   def index
-    @jobs = Job.limit(limit).offset(params[:offset])
+    if params[:title].present? && params[:spoken_language].present?
+      @jobs = Job.search_by_title(params[:title]).search_by_spoken_language(params[:spoken_language]).limit(limit).offset(params[:offset])
+    elsif params[:title].present?
+      @jobs = Job.search_by_title(params[:title]).limit(limit).offset(params[:offset])
+    elsif params[:spoken_language].present?
+      @jobs = Job.search_by_spoken_language(params[:spoken_language]).limit(limit).offset(params[:offset])
+    else
+      @jobs = Job.limit(limit).offset(params[:offset])
+    end
   end
 
   def create
