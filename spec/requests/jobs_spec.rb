@@ -71,6 +71,19 @@ RSpec.describe "Jobs API", type: :request do
     end
   end
 
+  describe 'POST /jobs' do
+    it 'creates a new job' do
+      post '/api/v1/jobs', params: { job: {
+          title: 'Promoter',
+          salary_per_hour: 18.5,
+          spoken_languages: [ 'english', 'german' ],
+          shifts: [[DateTime.new(2020,11,30,11), DateTime.new(2020,11,30,20)]]
+        }
+      }
+      expect(response).to have_http_status(:created)
+    end
+  end
+
   private
 
   def response_body
