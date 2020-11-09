@@ -1,6 +1,8 @@
 require "date"
 
 class Job < ApplicationRecord
+  has_many :assignments
+
   validates :title, presence: true
   validates :salary_per_hour, presence: true
 
