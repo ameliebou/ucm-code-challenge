@@ -3,9 +3,9 @@
 This is my proposal to the code challenge supplied by UCM agency.
 [Here](https://docs.google.com/document/d/11HfJX4YIzdb7UY5oDgi8toa4JObmtuNPNojY8vnEDAM/view) you can find the whole description of the challenge.
 In summary, I have created an API where:
-* users can register
-* jobs can be created and searched for
-* users can apply to jobs
+* Users can register
+* Jobs can be created and searched for
+* Users can apply to jobs
 
 ## Table of content
 * [Technologies](#technologies)
@@ -42,10 +42,9 @@ bundle exec rspec spec/controllers
 
 ## API
 
-### Users
-
 ### Jobs
 **Get all the jobs available on the API**
+
 `GET /api/v1/jobs`
 
 The response is a json with the following keys: `id`, `title`, `total_pay` and `spoken_languages`.
@@ -61,12 +60,14 @@ Parameters:
 Example:
 ```
 {
-  limit: 20,
-  offset: 20
+  "limit": 20,
+  "offset": 20
 }
 ```
 
 **Search jobs by title and/or by language**
+
+`GET /api/v1/jobs`
 
 Parameters:
 | Name               | Type                        | Description                        |
@@ -77,12 +78,13 @@ Parameters:
 Example:
 ```
 {
-  title: 'kitchen',
-  spoken_language: 'german'
+  "title": 'kitchen',
+  "spoken_language": 'german'
 }
 ```
 
 **Create a new job**
+
 `POST /api/v1/jobs`
 
 Parameters:
@@ -104,3 +106,19 @@ Example:
 ```
 
 ### Assignments
+
+`POST /api/v1/jobs/:job_id/assignments`
+
+Parameters:
+| Name               | Type                        | Description                        |
+| ------------------ | --------------------------- | ---------------------------------- |
+| `user_email`       | string                      | Email of the user                  |
+| `user_token`       | string                      | Authentication token of the user   |
+
+Example:
+```
+{
+  "user_email": "emma@example.com",
+  "user_token": "KJjLa3sGNzbJV575gowK"
+}
+```
