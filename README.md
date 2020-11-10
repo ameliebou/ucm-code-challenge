@@ -93,7 +93,7 @@ Parameters:
 | `title`            | string                      | The title of the job               |
 | `salary_per_hour`  | number                      | The pay per hour                   |
 | `spoken_languages` | array of strings            | The languages required for the job |
-| `shifts`           | array of arrays of DateTime | The shift dates for the job        |
+| `shifts`           | array of arrays             | The shift dates for the job        |
 
 Example:
 ```
