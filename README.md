@@ -12,6 +12,9 @@ In summary, I have created an API where:
 * [Setup](#setup)
 * [Tests](#test)
 * [API](#api)
+...* [Users](#users)
+...* [Jobs](#jobs)
+...* [Assignments](#assignments)
 
 ## Technologies
 * Ruby 2.6.6
@@ -42,7 +45,7 @@ bundle exec rspec spec/controllers
 
 ## API
 
-### Users sign up and sign in
+### Users
 
 **Sign up**
 
@@ -138,8 +141,9 @@ Parameters:
 | `spoken_languages` | array of strings            | The languages required for the job |
 | `shifts`           | array of arrays             | The shift dates for the job        |
 
-The parameter `spoken_languages` is an array containing the different languages required for the job as strings. **A job must have at least one spoken language.**
-The parameter `shifts` is an array of arrays. Each subarray needs two strings: the first string is the starting date and time of the shift, the second string is the ending date and time. **A job must have between one and seven shift(s).**
+The parameter `spoken_languages` is an array containing the different languages required for the job as strings. *A job must have at least one spoken language.*
+
+The parameter `shifts` is an array of arrays. Each subarray needs two strings: the first string is the starting date and time of the shift, the second string is the ending date and time. *A job must have between one and seven shift(s).*
 
 Example:
 ```
