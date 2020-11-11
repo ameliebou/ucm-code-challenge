@@ -12,6 +12,7 @@ In summary, I have created an API where:
 * [Setup](#setup)
 * [Tests](#test)
 * [API](#api)
+
 ..* [Users](#users)
 ..* [Jobs](#jobs)
 ..* [Assignments](#assignments)
