@@ -13,10 +13,6 @@ In summary, I have created an API where:
 * [Tests](#test)
 * [API](#api)
 
-..* [Users](#users)
-..* [Jobs](#jobs)
-..* [Assignments](#assignments)
-
 ## Technologies
 * Ruby 2.6.6
 * Rails 5.2.4.4
