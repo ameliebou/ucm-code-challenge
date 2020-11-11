@@ -95,13 +95,16 @@ Parameters:
 | `spoken_languages` | array of strings            | The languages required for the job |
 | `shifts`           | array of arrays             | The shift dates for the job        |
 
+The parameter `spoken_languages` is an array containing the different languages required for the job as strings.
+The parameter `shifts` is an array of arrays. Each subarray needs two strings: the first string is the starting date and time of the shift, the second string is the ending date and time.
+
 Example:
 ```
 {
   "title": "Promoter",
   "salary_per_hour": 18.5,
   "spoken_languages": [ "english", "german" ],
-  "shifts": [["2020-11-11T13:00:00+01:00", "2020-11-11T16:00:00+01:00"]]
+  "shifts": [["15-11-2020, 11:00+1", "15-11-2020, 15:00+1"]]
 }
 ```
 
