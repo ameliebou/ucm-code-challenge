@@ -42,6 +42,48 @@ bundle exec rspec spec/controllers
 
 ## API
 
+### Users sign up and sign in
+
+**Sign up**
+
+`POST /api/v1/sign_up`
+
+Users that want to sign up will need to use a unique email address.
+
+Parameters:
+| Name                     | Type            | Description                        |
+| ------------------------ | --------------- | ---------------------------------- |
+| `email`                  | string          | Email of the user                  |
+| `password`               | string          | Password                           |
+| `password_confirmation`  | string          | Password confirmation              |
+
+Example:
+```
+{
+  "email": "test@test.com",
+  "password": "123456",
+  "password_confirmation": "123456"
+}
+```
+
+**Sign in**
+
+`POST /api/v1/sign_in`
+
+Parameters:
+| Name                     | Type            | Description                        |
+| ------------------------ | --------------- | ---------------------------------- |
+| `email`                  | string          | Email of the user                  |
+| `password`               | string          | Password                           |
+
+Example:
+```
+{
+  "email": "test@test.com",
+  "password": "123456"
+}
+```
+
 ### Jobs
 **Get all the jobs available on the API**
 
@@ -56,6 +98,7 @@ Parameters:
 | ---------------- | --------------------------- | ---------------------------------- |
 | `limit`          | string                      | Number of jobs displayed (max: 20) |
 | `offset`         | string                      | Offset of jobs                     |
+
 
 Example:
 ```
@@ -95,8 +138,8 @@ Parameters:
 | `spoken_languages` | array of strings            | The languages required for the job |
 | `shifts`           | array of arrays             | The shift dates for the job        |
 
-The parameter `spoken_languages` is an array containing the different languages required for the job as strings.
-The parameter `shifts` is an array of arrays. Each subarray needs two strings: the first string is the starting date and time of the shift, the second string is the ending date and time.
+The parameter `spoken_languages` is an array containing the different languages required for the job as strings. **A job must have at least one spoken language.**
+The parameter `shifts` is an array of arrays. Each subarray needs two strings: the first string is the starting date and time of the shift, the second string is the ending date and time. **A job must have between one and seven shift(s).**
 
 Example:
 ```
