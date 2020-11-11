@@ -32,6 +32,6 @@ class Api::V1::SessionsController < Api::V1::BaseController
 
   def render_error
     render json: { errors: @user.errors.full_messages },
-      status: :failure
+      status: :unprocessable_entity
   end
 end
