@@ -76,6 +76,7 @@ RSpec.describe "Jobs requests", type: :request do
         }
       }
       expect(response).to_not have_http_status(:created)
+      expect(response_body["errors"]).to include("should have between 1 and 7 shifts")
     end
   end
 
