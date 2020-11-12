@@ -35,7 +35,9 @@ RSpec.describe Job, type: :model do
 
   describe "#total_pay" do
     it "returns the number of hours times the salary per hour" do
-      job = Job.create(title:"Kitchen help", salary_per_hour: 16, spoken_languages: ["german", "english"], shifts: [[DateTime.new(2020,11,27,11), DateTime.new(2020,11,27,15)], [DateTime.new(2020,11,27,19), DateTime.new(2020,11,27,22)]])
+      job = Job.create(title:"Kitchen help", salary_per_hour: 16, spoken_languages: ["german", "english"])
+      Shift.create(start: DateTime.new(2020,12,01,11), end: DateTime.new(2020,12,01,15), job: job)
+      Shift.create(start: DateTime.new(2020,12,03,11), end: DateTime.new(2020,12,03,15), job: job)
       actual = job.total_pay
       expected = 112
       expect(actual).to eq(expected)
