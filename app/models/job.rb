@@ -24,7 +24,7 @@ class Job < ApplicationRecord
 
   def total_pay
     hours = 0
-    shifts.each { |shift| hours += ((DateTime.parse(shift[1]) - DateTime.parse(shift[0])) * 24).to_i }
+    shifts.each { |shift| hours += ((DateTime.parse(shift.end.to_s) - DateTime.parse(shift.start.to_s)) * 24).to_i }
     return hours * salary_per_hour
   end
 end
