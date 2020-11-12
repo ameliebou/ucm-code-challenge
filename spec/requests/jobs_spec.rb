@@ -63,9 +63,19 @@ RSpec.describe "Jobs requests", type: :request do
               DateTime.new(2020,11,30,17)
             ]
           }
-        },
+        }
       }
       expect(response).to have_http_status(:created)
+    end
+
+    it "doesn't create a job if the wrong number of shifts is provided" do
+      post '/api/v1/jobs', params: { job: {
+          title: 'Promoter',
+          salary_per_hour: 18.5,
+          spoken_languages: [ 'english', 'german' ]
+        }
+      }
+      expect(response).to_not have_http_status(:created)
     end
   end
 
