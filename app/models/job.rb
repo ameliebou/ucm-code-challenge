@@ -2,12 +2,12 @@ require "date"
 
 class Job < ApplicationRecord
   has_many :assignments
+  has_many :shifts
 
   validates :title, presence: true
   validates :salary_per_hour, presence: true
 
   validates :spoken_languages, length: { minimum: 1 }
-  validates :shifts, length: { minimum: 1, maximum: 7 }
 
   include PgSearch::Model
   pg_search_scope :search_by_title,
