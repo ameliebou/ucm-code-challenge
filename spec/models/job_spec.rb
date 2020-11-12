@@ -39,7 +39,7 @@ RSpec.describe Job, type: :model do
       Shift.create(start: DateTime.new(2020,12,01,11), end: DateTime.new(2020,12,01,15), job: job)
       Shift.create(start: DateTime.new(2020,12,03,11), end: DateTime.new(2020,12,03,15), job: job)
       actual = job.total_pay
-      expected = 112
+      expected = 128
       expect(actual).to eq(expected)
     end
   end
