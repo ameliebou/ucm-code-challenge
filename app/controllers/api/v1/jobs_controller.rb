@@ -13,10 +13,11 @@ class Api::V1::JobsController < Api::V1::BaseController
 
   def create
     @job = Job.create(job_params)
-    shifts_params[:shifts].each { |shift| Shift.create(start: shift[1][0], end: shift[1][1], job: @job) }
-    if @job.save
+    shifts_params[:shifts].each { |shift| Shift.create(start: shift[1][0], end: shift[1][1], job: @job) } unless shifts_params[:shifts].nil?
+    if @job.save && @job.valid_shifts?
       render json: @job, status: :created
     else
+      @job.destroy
       render_error
     end
   end
