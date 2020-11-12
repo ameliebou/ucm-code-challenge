@@ -136,11 +136,11 @@ Parameters:
 | `title`            | string                      | The title of the job               |
 | `salary_per_hour`  | number                      | The pay per hour                   |
 | `spoken_languages` | array of strings            | The languages required for the job |
-| `shifts`           | array of arrays             | The shift dates for the job        |
+| `shifts`           | hash                        | The shift dates for the job        |
 
 The parameter `spoken_languages` is an array containing the different languages required for the job as strings. *A job must have at least one spoken language.*
 
-The parameter `shifts` is an array of arrays. Each subarray needs two strings: the first string is the starting date and time of the shift, the second string is the ending date and time. *A job must have between one and seven shift(s).*
+The parameter `shifts` is a hash. Each key should follow the name structure `shift_:number`. Each value is an array of two strings: the first string is the starting date and time of the shift, the second string is the ending date and time. *A job must have between one and seven shift(s).*
 
 Example:
 ```
@@ -148,7 +148,10 @@ Example:
   "title": "Promoter",
   "salary_per_hour": 18.5,
   "spoken_languages": [ "english", "german" ],
-  "shifts": [["15-11-2020, 11:00+1", "15-11-2020, 15:00+1"]]
+  "shifts": {
+    "shift_one": ["Dec 10 2020, 18:00", "Dec 10 2020, 23:00"],
+    "shift_two": ["Dec 15 2020, 18:00", "Dec 15 2020, 23:00"]
+  }
 }
 ```
 

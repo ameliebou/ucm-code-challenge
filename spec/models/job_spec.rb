@@ -33,32 +33,41 @@ RSpec.describe Job, type: :model do
     expect(job.errors[:spoken_languages]).to_not include("is too short (minimum is 1 character)")
   end
 
-  it "must have between 1 and 7 shifts" do
-    job = Job.new
-    job.valid?
-    expect(job.errors[:shifts]).to include("is too short (minimum is 1 character)")
-
-    job.shifts << [DateTime.new(2020,11,25,11), DateTime.new(2020,11,25,13)]
-    job.valid?
-    expect(job.errors[:shifts]).to_not include("is too short (minimum is 1 character)")
-
-    job.shifts << [DateTime.new(2020,11,25,11), DateTime.new(2020,11,25,13)]
-    job.shifts << [DateTime.new(2020,11,25,11), DateTime.new(2020,11,25,13)]
-    job.shifts << [DateTime.new(2020,11,25,11), DateTime.new(2020,11,25,13)]
-    job.shifts << [DateTime.new(2020,11,25,11), DateTime.new(2020,11,25,13)]
-    job.shifts << [DateTime.new(2020,11,25,11), DateTime.new(2020,11,25,13)]
-    job.shifts << [DateTime.new(2020,11,25,11), DateTime.new(2020,11,25,13)]
-    job.shifts << [DateTime.new(2020,11,25,11), DateTime.new(2020,11,25,13)]
-    job.valid?
-    expect(job.errors[:shifts]).to include("is too long (maximum is 7 characters)")
-  end
-
   describe "#total_pay" do
     it "returns the number of hours times the salary per hour" do
-      job = Job.create(title:"Kitchen help", salary_per_hour: 16, spoken_languages: ["german", "english"], shifts: [[DateTime.new(2020,11,27,11), DateTime.new(2020,11,27,15)], [DateTime.new(2020,11,27,19), DateTime.new(2020,11,27,22)]])
+      job = Job.create(title:"Kitchen help", salary_per_hour: 16, spoken_languages: ["german", "english"])
+      Shift.create(start: DateTime.new(2020,12,01,11), end: DateTime.new(2020,12,01,15), job: job)
+      Shift.create(start: DateTime.new(2020,12,03,11), end: DateTime.new(2020,12,03,15), job: job)
       actual = job.total_pay
-      expected = 112
+      expected = 128
       expect(actual).to eq(expected)
+    end
+  end
+
+  describe "#valid_shifts?" do
+    it "returns true if a Job instance has between 1 and 7 shifts" do
+      job = Job.create(title:"Kitchen help", salary_per_hour: 16, spoken_languages: ["german", "english"])
+      Shift.create(start: DateTime.new(2020,12,01,11), end: DateTime.new(2020,12,01,15), job: job)
+      Shift.create(start: DateTime.new(2020,12,03,11), end: DateTime.new(2020,12,03,15), job: job)
+      expect(job.valid_shifts?).to eq(true)
+    end
+
+    it "returns false if a Job instance doesn't have any shift" do
+      job = Job.create(title:"Kitchen help", salary_per_hour: 16, spoken_languages: ["german", "english"])
+      expect(job.valid_shifts?).to eq(false)
+    end
+
+    it "returns false if a Job instance has more than 7 shifts" do
+      job = Job.create(title:"Kitchen help", salary_per_hour: 16, spoken_languages: ["german", "english"])
+      Shift.create(start: DateTime.new(2020,12,01,11), end: DateTime.new(2020,12,01,15), job: job)
+      Shift.create(start: DateTime.new(2020,12,02,11), end: DateTime.new(2020,12,02,15), job: job)
+      Shift.create(start: DateTime.new(2020,12,03,11), end: DateTime.new(2020,12,03,15), job: job)
+      Shift.create(start: DateTime.new(2020,12,04,11), end: DateTime.new(2020,12,04,15), job: job)
+      Shift.create(start: DateTime.new(2020,12,05,11), end: DateTime.new(2020,12,05,15), job: job)
+      Shift.create(start: DateTime.new(2020,12,06,11), end: DateTime.new(2020,12,06,15), job: job)
+      Shift.create(start: DateTime.new(2020,12,07,11), end: DateTime.new(2020,12,07,15), job: job)
+      Shift.create(start: DateTime.new(2020,12,8,11), end: DateTime.new(2020,12,8,15), job: job)
+      expect(job.valid_shifts?).to eq(false)
     end
   end
 end

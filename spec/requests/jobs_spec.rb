@@ -3,8 +3,11 @@ require 'rails_helper'
 RSpec.describe "Jobs requests", type: :request do
   describe 'GET /jobs' do
     before do
-      Job.create(title:"Host/Hostess", salary_per_hour: 20, spoken_languages: ["english", "french"], shifts: [[DateTime.new(2020,11,25,11), DateTime.new(2020,11,25,15)], [DateTime.new(2020,11,25,15), DateTime.new(2020,11,25,18)]])
-      Job.create(title:"Kitchen help", salary_per_hour: 16, spoken_languages: ["german", "english"], shifts: [[DateTime.new(2020,11,27,11), DateTime.new(2020,11,27,15)], [DateTime.new(2020,11,27,19), DateTime.new(2020,11,27,22)]])
+      job_host = Job.create(title:"Host/Hostess", salary_per_hour: 20, spoken_languages: ["english", "french"])
+      Shift.create(start: DateTime.new(2020,12,01,11), end: DateTime.new(2020,12,01,16), job: job_host)
+      job_kitchen = Job.create(title:"Kitchen help", salary_per_hour: 16, spoken_languages: ["german", "english"])
+      Shift.create(start: DateTime.new(2020,12,03,11), end: DateTime.new(2020,12,03,15), job: job_kitchen)
+      Shift.create(start: DateTime.new(2020,12,03,18), end: DateTime.new(2020,12,03,23), job: job_kitchen)
     end
 
     it 'returns all jobs' do
@@ -50,10 +53,30 @@ RSpec.describe "Jobs requests", type: :request do
           title: 'Promoter',
           salary_per_hour: 18.5,
           spoken_languages: [ 'english', 'german' ],
-          shifts: [[DateTime.new(2020,11,30,11), DateTime.new(2020,11,30,20)]]
+          shifts: {
+            shift_one: [
+              DateTime.new(2020,11,29,10),
+              DateTime.new(2020,11,29,17)
+            ],
+            shift_two: [
+              DateTime.new(2020,11,30,10),
+              DateTime.new(2020,11,30,17)
+            ]
+          }
         }
       }
       expect(response).to have_http_status(:created)
+    end
+
+    it "doesn't create a job if the wrong number of shifts is provided" do
+      post '/api/v1/jobs', params: { job: {
+          title: 'Promoter',
+          salary_per_hour: 18.5,
+          spoken_languages: [ 'english', 'german' ]
+        }
+      }
+      expect(response).to_not have_http_status(:created)
+      expect(response_body["errors"]).to include("Shifts must be between 1 and 7")
     end
   end
 

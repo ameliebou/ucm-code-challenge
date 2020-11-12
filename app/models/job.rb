@@ -2,12 +2,12 @@ require "date"
 
 class Job < ApplicationRecord
   has_many :assignments
+  has_many :shifts
 
   validates :title, presence: true
   validates :salary_per_hour, presence: true
 
   validates :spoken_languages, length: { minimum: 1 }
-  validates :shifts, length: { minimum: 1, maximum: 7 }
 
   include PgSearch::Model
   pg_search_scope :search_by_title,
@@ -24,7 +24,16 @@ class Job < ApplicationRecord
 
   def total_pay
     hours = 0
-    shifts.each { |shift| hours += ((DateTime.parse(shift[1]) - DateTime.parse(shift[0])) * 24).to_i }
+    shifts.each { |shift| hours += ((DateTime.parse(shift.end.to_s) - DateTime.parse(shift.start.to_s)) * 24).to_i }
     return hours * salary_per_hour
+  end
+
+  def valid_shifts?
+    if shifts.count > 0 && shifts.count <= 7
+      return true
+    else
+      errors.add(:shifts, "must be between 1 and 7")
+      return false
+    end
   end
 end
