@@ -27,4 +27,8 @@ class Job < ApplicationRecord
     shifts.each { |shift| hours += ((DateTime.parse(shift.end.to_s) - DateTime.parse(shift.start.to_s)) * 24).to_i }
     return hours * salary_per_hour
   end
+
+  def valid_shifts?
+    shifts.count > 0 && shifts.count <= 7
+  end
 end
