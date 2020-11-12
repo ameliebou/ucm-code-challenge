@@ -29,6 +29,11 @@ class Job < ApplicationRecord
   end
 
   def valid_shifts?
-    shifts.count > 0 && shifts.count <= 7
+    if shifts.count > 0 && shifts.count <= 7
+      return true
+    else
+      errors.add(:shifts, "must be between 1 and 7")
+      return false
+    end
   end
 end
