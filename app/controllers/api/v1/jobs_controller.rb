@@ -12,7 +12,8 @@ class Api::V1::JobsController < Api::V1::BaseController
   end
 
   def create
-    @job = Job.new(job_params)
+    @job = Job.create(job_params)
+    shifts_params[:shifts].each { |shift| Shift.create(start: shift[1][0], end: shift[1][1], job: @job) }
     if @job.save
       render json: @job, status: :created
     else
@@ -30,7 +31,26 @@ class Api::V1::JobsController < Api::V1::BaseController
   end
 
   def job_params
-    params.require(:job).permit(:title, :salary_per_hour, { spoken_languages: [] }, { shifts: [] })
+    params.require(:job).permit(
+      :title,
+      :salary_per_hour,
+      { spoken_languages: [] }
+    )
+  end
+
+  def shifts_params
+    params.require(:job).permit(
+      shifts: {
+        shift_one: [],
+        shift_two: [],
+        shift_three: [],
+        shift_four: [],
+        shift_five: [],
+        shift_six: [],
+        shift_seven: []
+      }
+
+    )
   end
 
   def render_error
