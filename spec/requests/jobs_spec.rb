@@ -53,8 +53,17 @@ RSpec.describe "Jobs requests", type: :request do
           title: 'Promoter',
           salary_per_hour: 18.5,
           spoken_languages: [ 'english', 'german' ],
-          shifts: [[DateTime.new(2020,11,30,11), DateTime.new(2020,11,30,20)]]
-        }
+          shifts: {
+            shift_one: [
+              DateTime.new(2020,11,29,10),
+              DateTime.new(2020,11,29,17)
+            ],
+            shift_two: [
+              DateTime.new(2020,11,30,10),
+              DateTime.new(2020,11,30,17)
+            ]
+          }
+        },
       }
       expect(response).to have_http_status(:created)
     end
